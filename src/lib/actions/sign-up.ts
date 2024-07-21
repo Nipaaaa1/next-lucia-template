@@ -16,7 +16,8 @@ export const signUp = async (formData: FormData): Promise<ActionResult> => {
 
   const validatedData = AuthSchema.safeParse(data)
 
-  if(validatedData.error) {
+  if(!validatedData.success) {
+    console.log(validatedData.error)
     return {
       error: validatedData.error.message
     }
