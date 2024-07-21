@@ -1,58 +1,65 @@
-import { AuthSchema } from "../validations"
-import { db } from "../db";
 import { verify } from "@node-rs/argon2";
-import { lucia } from "../auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { lucia } from "../auth";
+import { db } from "../db";
+import { AuthSchema } from "../validations";
 
 export const signIn = async (formData: FormData): Promise<ActionResult> => {
-  "use server"
+	"use server";
 
-  const data = {
-    username: formData.get("username"),
-    password: formData.get("password")
-  }
+	const data = {
+		username: formData.get("username"),
+		password: formData.get("password"),
+	};
 
-  const validatedData = AuthSchema.safeParse(data)
+	const validatedData = AuthSchema.safeParse(data);
 
-  if(validatedData.error) {
-    return {
-      error: validatedData.error.message
-    }
-  }
+	if (validatedData.error) {
+		return {
+			error: validatedData.error.message,
+		};
+	}
 
-  const existingUser = await db.user.findFirst({
-    where: {
-      username: validatedData.data.username
-    }
-  })
+	const existingUser = await db.user.findFirst({
+		where: {
+			username: validatedData.data.username,
+		},
+	});
 
-  if(!existingUser) {
-    return {
-      error: "Incorrect username or password"
-    }
-  }
+	if (!existingUser) {
+		return {
+			error: "Incorrect username or password",
+		};
+	}
 
-  const validatedPassword = await verify(existingUser.password_hash, validatedData.data.password, {
-    memoryCost: 19456,
-    timeCost: 2,
-    outputLen: 32,
-    parallelism: 1,
-  })
+	const validatedPassword = await verify(
+		existingUser.password_hash,
+		validatedData.data.password,
+		{
+			memoryCost: 19456,
+			timeCost: 2,
+			outputLen: 32,
+			parallelism: 1,
+		},
+	);
 
-  if(!validatedPassword) {
-    return {
-      error: "Incorrect username or password"
-    }
-  }
+	if (!validatedPassword) {
+		return {
+			error: "Incorrect username or password",
+		};
+	}
 
-  const session = await lucia.createSession(existingUser.id, {})
-  const sessionCookie = lucia.createSessionCookie(session.id)
-  cookies().set(sessionCookie.name, sessionCookie.value,sessionCookie.attributes)
-  return redirect("/")
-}
-
+	const session = await lucia.createSession(existingUser.id, {});
+	const sessionCookie = lucia.createSessionCookie(session.id);
+	cookies().set(
+		sessionCookie.name,
+		sessionCookie.value,
+		sessionCookie.attributes,
+	);
+	return redirect("/");
+};
 
 interface ActionResult {
-  error: string
+	error: string;
 }
