@@ -1,26 +1,21 @@
+"use server"
+
 import { hash } from "@node-rs/argon2";
 import { generateIdFromEntropySize } from "lucia";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { lucia } from "../auth";
 import { db } from "../db";
-import { AuthSchema } from "../validations";
+import { AuthSchema, type AuthSchemaType } from "../validations";
 
-export const signUp = async (formData: FormData): Promise<ActionResult> => {
-	"use server";
-
-	const data = {
-		username: formData.get("username"),
-		password: formData.get("password"),
-	};
+export const signUp = async (data: AuthSchemaType): Promise<ActionResult> => {
 
 	const validatedData = AuthSchema.safeParse(data);
 
 	if (!validatedData.success) {
-		console.log(validatedData.error);
 		return {
 			error: validatedData.error.message,
-		};
+		}
 	}
 
 	const passwordHash = await hash(validatedData.data.password, {

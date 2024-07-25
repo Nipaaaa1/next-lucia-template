@@ -1,17 +1,13 @@
+"use server"
+
 import { verify } from "@node-rs/argon2";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { lucia } from "../auth";
 import { db } from "../db";
-import { AuthSchema } from "../validations";
+import { AuthSchema, type AuthSchemaType } from "../validations";
 
-export const signIn = async (formData: FormData): Promise<ActionResult> => {
-	"use server";
-
-	const data = {
-		username: formData.get("username"),
-		password: formData.get("password"),
-	};
+export const signIn = async (data: AuthSchemaType): Promise<ActionResult> => {
 
 	const validatedData = AuthSchema.safeParse(data);
 
@@ -57,9 +53,9 @@ export const signIn = async (formData: FormData): Promise<ActionResult> => {
 		sessionCookie.value,
 		sessionCookie.attributes,
 	);
-	return redirect("/");
+  return redirect("/")
 };
 
 interface ActionResult {
-	error: string;
+  error: string,
 }
