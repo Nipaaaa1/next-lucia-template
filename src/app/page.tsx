@@ -8,8 +8,8 @@ const Home = async () => {
 
 	if (!user) {
 		return (
-			<div className="w-full h-svh grid place-items-center">
-				<main className="max-w-md rounded-md border flex flex-col gap-4 p-6">
+			<div className="w-full h-svh bg-slate-200 grid place-items-center">
+				<main className="max-w-md bg-slate-50 rounded-md shadow-md flex flex-col gap-4 p-6">
 					<h1 className="text-2xl">Please Sign In or Sign Up</h1>
 					<Button className="w-full py-4 flex justify-center" asChild>
 						<Link href="/sign-in">Sign In</Link>

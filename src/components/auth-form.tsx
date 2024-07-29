@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -48,11 +47,8 @@ export const AuthForm = ({ action, submitText }: AuthFormProps) => {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="example123" {...field} />
+                <Input type="text" {...field} />
               </FormControl>
-              <FormDescription>
-                Enter your username
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -64,11 +60,8 @@ export const AuthForm = ({ action, submitText }: AuthFormProps) => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input type="password" placeholder="Your Password" {...field} />
+                <Input type="password" {...field} />
               </FormControl>
-              <FormDescription>
-                Enter your password
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

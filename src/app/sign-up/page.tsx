@@ -9,8 +9,8 @@ const signUpPage = async () => {
 	if (user) redirect("/");
 
 	return (
-		<div className="w-full h-svh grid place-items-center">
-			<main className="max-w-md rounded-md border p-6">
+		<div className="w-full h-svh bg-slate-200 grid place-items-center">
+			<main className="max-w-md bg-slate-50 rounded-md shadow-md p-6">
         <AuthForm action={signUp} submitText="Sign Up" />
 			</main>
 		</div>
