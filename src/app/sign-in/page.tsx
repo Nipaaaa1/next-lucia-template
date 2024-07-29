@@ -8,11 +8,9 @@ const signInPage = async () => {
 
 	if (user) redirect("/");
 	return (
-		<div className="w-full h-svh bg-slate-200 grid place-items-center">
-			<main className="max-w-md bg-slate-50 rounded-md shadow-md p-6">
+			<main className="max-w-md bg-white rounded-md shadow-md p-6">
         <AuthForm action={signIn} submitText="Sign In" />
 			</main>
-		</div>
 	);
 };
 
