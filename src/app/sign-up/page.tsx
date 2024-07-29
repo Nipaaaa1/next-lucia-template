@@ -9,9 +9,9 @@ const signUpPage = async () => {
 	if (user) redirect("/");
 
 	return (
-			<main className="max-w-md bg-white rounded-md shadow-md p-6">
-        <AuthForm action={signUp} submitText="Sign Up" />
-			</main>
+		<main className="max-w-md bg-white rounded-md shadow-md p-6">
+			<AuthForm action={signUp} submitText="Sign Up" />
+		</main>
 	);
 };
 

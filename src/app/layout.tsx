@@ -17,10 +17,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-      <div className="w-full h-svh bg-slate-200 grid place-items-center">
-        {children}
-      </div>
-      </body>
+				<div className="w-full h-svh bg-slate-200 grid place-items-center">
+					{children}
+				</div>
+			</body>
 		</html>
 	);
 }

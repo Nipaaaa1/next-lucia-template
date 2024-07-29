@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { verify } from "@node-rs/argon2";
 import { cookies } from "next/headers";
@@ -8,7 +8,6 @@ import { db } from "../db";
 import { AuthSchema, type AuthSchemaType } from "../validations";
 
 export const signIn = async (data: AuthSchemaType): Promise<ActionResult> => {
-
 	const validatedData = AuthSchema.safeParse(data);
 
 	if (validatedData.error) {
@@ -53,9 +52,9 @@ export const signIn = async (data: AuthSchemaType): Promise<ActionResult> => {
 		sessionCookie.value,
 		sessionCookie.attributes,
 	);
-  return redirect("/")
+	return redirect("/");
 };
 
 interface ActionResult {
-  error: string,
+	error: string;
 }

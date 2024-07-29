@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { hash } from "@node-rs/argon2";
 import { generateIdFromEntropySize } from "lucia";
@@ -9,13 +9,12 @@ import { db } from "../db";
 import { AuthSchema, type AuthSchemaType } from "../validations";
 
 export const signUp = async (data: AuthSchemaType): Promise<ActionResult> => {
-
 	const validatedData = AuthSchema.safeParse(data);
 
 	if (!validatedData.success) {
 		return {
 			error: validatedData.error.message,
-		}
+		};
 	}
 
 	const passwordHash = await hash(validatedData.data.password, {
